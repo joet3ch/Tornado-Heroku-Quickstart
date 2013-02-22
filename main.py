@@ -16,7 +16,6 @@ import unicodedata
 
 # import and define tornado-y things
 from tornado.options import define, options
-define("port", default=5000, help="run on the given port", type=int)
 
 # application settings and handle mapping info
 class Application(tornado.web.Application):
@@ -52,7 +51,7 @@ class MainHandler(tornado.web.RequestHandler):
 def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application())
-    http_server.listen( tornado.options.options.port )
+    http_server.listen( int(os.environ.get('PORT', 5000)) )
     
     # start it up
     tornado.ioloop.IOLoop.instance().start()
